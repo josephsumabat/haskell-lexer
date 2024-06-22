@@ -16,7 +16,8 @@ import Language.Haskell.Lexer.Tokens
 import RegExp
 
 --
-program = many (lexeme ! whitespace)
+program = many (lexeme ! whitespace ! rErr)
+--program = many (lexeme ! whitespace)
 
 lexeme  = varid      & o Varid
         ! conid      & o Conid
@@ -34,6 +35,12 @@ lexeme  = varid      & o Varid
         ! qconsym    & o Qconsym
         ! qquote     & o QQuote
 
+        -- ! nonWsSym   & o ResilientErrorToken
+
+rErr =
+        rErrSym & o ResilientErrorToken
+            where
+    rErrSym = ((many (a cany)) & whitespace) -! (lexeme ! whitespace)
 
 literal = integer    & o IntLit
         ! float      & o FloatLit

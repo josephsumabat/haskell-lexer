@@ -32,6 +32,7 @@ data Token
   | Commentstart        -- ^ Dashes
   | Comment             -- ^ The stuff after the dashes
 
+  | ResilientErrorToken
   | ErrorToken | GotEOF | TheRest
 
   | ModuleName | ModuleAlias -- ^ recognized in a later pass
